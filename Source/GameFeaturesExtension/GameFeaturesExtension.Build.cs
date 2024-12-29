@@ -10,7 +10,6 @@ public class GameFeaturesExtension : ModuleRules
 		{
 			"Core",
 			"GameFeatures",
-			"GameplayAbilities",
 			"GameplayTags",
 			"EnhancedInput",
 			"CommonUI",

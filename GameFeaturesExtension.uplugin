@@ -26,10 +26,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "GameplayAbilities",
-			"Enabled": true
-		},
-		{
 			"Name": "EnhancedInput",
 			"Enabled": true
 		},
