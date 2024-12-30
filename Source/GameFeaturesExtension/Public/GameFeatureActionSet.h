@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFeaturePluginURL.h"
 #include "Engine/DataAsset.h"
 #include "GameFeatureActionSet.generated.h"
 
@@ -22,6 +23,7 @@ public:
 	//~ Begin UObject Interface
 #if WITH_EDITOR
 	virtual EDataValidationResult IsDataValid(class FDataValidationContext& Context) const override;
+	virtual void PostSaveRoot(FObjectPostSaveRootContext ObjectSaveContext) override;
 #endif
 	//~ End UObject Interface
 
@@ -34,9 +36,13 @@ public:
 public:
 	/** List of Game Feature Plugin URL's this action set depends on */
 	UPROPERTY(EditDefaultsOnly, Category = "Dependencies")
-	TArray<FString> GameFeaturesToEnable;
+	TArray<FGameFeaturePluginURL> GameFeaturesToEnable;
 
 	/** List of Game Feature Actions to perform as this action set is loaded/activated/deactivated/unloaded */
 	UPROPERTY(EditDefaultsOnly, Instanced, Category = "Actions")
 	TArray<TObjectPtr<UGameFeatureAction>> Actions;
+
+private:
+	UPROPERTY(AssetRegistrySearchable)
+	uint32 FeatureDependencies;
 };

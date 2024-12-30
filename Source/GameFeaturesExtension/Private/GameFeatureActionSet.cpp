@@ -5,6 +5,7 @@
 
 #if WITH_EDITOR
 #include "Misc/DataValidation.h"
+#include "UObject/ObjectSaveContext.h"
 #endif
 
 #include "GameFeatureAction.h"
@@ -15,6 +16,7 @@
 
 UGameFeatureActionSet::UGameFeatureActionSet()
 {
+	FeatureDependencies = GameFeaturesToEnable.Num();
 }
 
 #if WITH_EDITOR
@@ -41,6 +43,13 @@ EDataValidationResult UGameFeatureActionSet::IsDataValid(class FDataValidationCo
 	}
 
 	return Result;
+}
+
+void UGameFeatureActionSet::PostSaveRoot(FObjectPostSaveRootContext ObjectSaveContext)
+{
+	Super::PostSaveRoot(ObjectSaveContext);
+
+	FeatureDependencies = GameFeaturesToEnable.Num();
 }
 #endif
 #if WITH_EDITORONLY_DATA
