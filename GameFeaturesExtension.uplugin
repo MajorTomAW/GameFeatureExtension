@@ -18,6 +18,11 @@
 			"Name": "GameFeaturesExtension",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "GameFeaturesExtensionEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
