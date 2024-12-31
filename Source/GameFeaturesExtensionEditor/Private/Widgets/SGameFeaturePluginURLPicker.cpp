@@ -8,6 +8,8 @@
 #include "Widgets/Input/SSearchBox.h"
 #include "Widgets/Layout/SScrollBorder.h"
 
+#define ENGINE_VERSION_LATER_5_4 ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 5
+
 class SGameFeaturePluginURLPickerItem : public STableRow<TSharedPtr<FGameFeaturePluginPickerEntry>>
 {
 public:
@@ -69,7 +71,9 @@ void SGameFeaturePluginURLPicker::Construct(const FArguments& InArgs)
 	.ListItemsSource(&Plugins)
 	.OnGenerateRow(this, &SGameFeaturePluginURLPicker::OnGenerateRow)
 	.OnSelectionChanged(this, &SGameFeaturePluginURLPicker::OnSelectionChanged)
+#if !ENGINE_VERSION_LATER_5_4
 	.ItemHeight(20.f)
+#endif
 	.HeaderRow
 	(
 		SNew(SHeaderRow)
