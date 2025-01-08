@@ -52,10 +52,10 @@ EDataValidationResult UGameFeatureAction_AddWidget::IsDataValid(class FDataValid
 				Context.AddError(FText::Format(LOCTEXT("LayoutClassNull", "Layouts[{0}].LayoutClass must be set"), LayoutIndex));
 			}
 
-			if (Entry.LayerTag.IsValid())
+			if (!Entry.LayerTag.IsValid())
 			{
 				Result = EDataValidationResult::Invalid;
-				Context.AddError(FText::Format(LOCTEXT("LayerTagInvalid", "Layouts[{0}].LayerTag must be empty"), LayoutIndex));
+				Context.AddError(FText::Format(LOCTEXT("LayerTagInvalid", "Layouts[{0}].LayerTag must be set"), LayoutIndex));
 			}
 
 			++LayoutIndex;
