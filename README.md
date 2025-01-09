@@ -55,6 +55,8 @@ UPROPERTY(EditDefaultsOnly, Category = "Dependencies")
 TArray<FGameFeaturePluginURL> GameFeaturesToEnable;
 ```
 
+<img src="https://github.com/user-attachments/assets/9d7ef94d-202f-4256-a01d-733112c56ed5" alt="FGameFeaturePluginURL" width="100%"/>
+
 ---
 
 ### <a id="GameFeatureActionSet"></a> 📑 〢 Game Feature Action Set
