@@ -2,7 +2,8 @@
 
 ## <a id="head"></a> 📋 〢 Overview
 
-A plugin that extends the existing ``GameFeatures`` plugin by adding common GameFeatureActions and other goodies to the editor.
+A plugin that extends the existing ``GameFeatures`` plugin by adding common GameFeatureActions and other goodies to the editor.  
+Also with some inspiration from the [Lyra Starter Game](https://github.com/johnlogostini/Lyra)
 
 ---
 
