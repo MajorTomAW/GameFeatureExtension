@@ -1,6 +1,6 @@
 # Game Feature Extension
 
-## <a id="desc"></a> 📋 〢 Overview
+## <a id="#head"></a> 📋 〢 Overview
 
 A plugin that extends the existing ``GameFeatures`` plugin by adding common GameFeatureActions and other goodies to the editor.
 
@@ -15,7 +15,7 @@ A plugin that extends the existing ``GameFeatures`` plugin by adding common Game
 
 ---
 
-### <a id="#actions_worldactionbase"></a> 📣 〢 World Action Base
+### <a id="#actions_worldactionbase"></a>📣 〢 World Action Base
 
 asdasd  
 asd  
@@ -28,7 +28,7 @@ asdasd
 
 ---
 
-### <a id="#actions_addinputmappingcontext"></a> 📣 〢 Add Input Mapping Context
+### <a id="#actions_addinputmappingcontext"></a>📣 〢 Add Input Mapping Context
 
 asdasd  
 asd  
@@ -41,7 +41,7 @@ asdasd
 
 ---
 
-### <a id="#gfpurl"></a> 🔗 〢 Game Feature Plugin URL
+### <a id="#gfpurl"></a>🔗 〢 Game Feature Plugin URL
 
 asdasd  
 asd  
@@ -54,7 +54,7 @@ asdasd
 
 ---
 
-### <a id="#gfpactionset"></a> 📑 〢 Game Feature Action Set
+### <a id="#gfpactionset"></a>📑 〢 Game Feature Action Set
 
 asdasd  
 asd  
