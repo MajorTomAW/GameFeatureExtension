@@ -7,15 +7,15 @@ A plugin that extends the existing ``GameFeatures`` plugin by adding common Game
 ---
 
 ## 🌐 〢 Index
-- 📣 ・Actions
-    - [World Action Base](#actions_worldactionbase)
-    - [Add Input Mapping Context](#actions_addinputmappingcontext)
-- 🔗 [・Game Feature Plugin URL](#gfpurl)
-- 📑 [・Game Feature Action Set](#GameFeatureActionSet)
+> - 📣 ・__Actions__<br>
+> &nbsp;- [World Action Base](#actions_worldactionbase)<br>
+> &nbsp;- [Add Input Mapping Context](#actions_addinputmappingcontext)<br>
+> &nbsp;- 🔗 [・Game Feature Plugin URL](#gfpurl)<br>
+> &nbsp;- 📑 [・Game Feature Action Set](#GameFeatureActionSet)<br>
 
 ---
 
-### <a id="#actions_worldactionbase"></a>📣 〢 World Action Base
+### <a name="#actions_worldactionbase"></a>📣 〢 World Action Base
 
 asdasd  
 asd  
@@ -54,7 +54,7 @@ asdasd
 
 ---
 
-### <a id="#GameFeatureActionSet"></a>📑 〢 Game Feature Action Set
+### <a name="#GameFeatureActionSet"></a>📑 〢 Game Feature Action Set
 
 asdasd  
 asd  
