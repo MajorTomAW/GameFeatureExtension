@@ -10,8 +10,8 @@ A plugin that extends the existing ``GameFeatures`` plugin by adding common Game
 - 📣 ・Actions
     - [World Action Base](#actions_worldactionbase)
     - [Add Input Mapping Context](#actions_addinputmappingcontext)
-- [🔗 ・Game Feature Plugin URL](#gfpurl)
-- [📑 ・Game Feature Action Set](#gfpactionset)
+- 🔗 [・Game Feature Plugin URL](#gfpurl)
+- 📑 [・Game Feature Action Set](#gfpactionset)
 
 ---
 
