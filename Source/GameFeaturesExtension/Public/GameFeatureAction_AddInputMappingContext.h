@@ -60,8 +60,6 @@ public:
 	virtual EDataValidationResult IsDataValid(class FDataValidationContext& Context) const override;
 #endif
 	//~ End UObject Interface
-
-	static const FName NAME_BindInputsNow;
 	
 private:
 	/** List of input mapping contexts to add. */

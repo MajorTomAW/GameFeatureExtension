@@ -17,8 +17,6 @@
 
 #define LOCTEXT_NAMESPACE "GameFeatures"
 
-const FName UGameFeatureAction_AddInputMappingContext::NAME_BindInputsNow("BindInputsNow");
-
 void UGameFeatureAction_AddInputMappingContext::OnGameFeatureRegistering()
 {
 	Super::OnGameFeatureRegistering();
@@ -60,7 +58,30 @@ void UGameFeatureAction_AddInputMappingContext::OnGameFeatureUnregistering()
 void UGameFeatureAction_AddInputMappingContext::OnAddToWorld(
 	const FWorldContext& WorldContext, const FGameFeatureStateChangeContext& ChangeContext)
 {
-	Super::OnAddToWorld(WorldContext, ChangeContext);
+	const UWorld* World = WorldContext.World();
+	const UGameInstance* GameInstance = WorldContext.OwningGameInstance;
+	FPerContextData& ActiveData = ContextData.FindOrAdd(ChangeContext);
+
+	if (GameInstance == nullptr)
+	{
+		return;
+	}
+
+	if (World == nullptr || !World->IsGameWorld())
+	{
+		return;
+	}
+
+	if (UGameFrameworkComponentManager* ComponentManager = UGameInstance::GetSubsystem<UGameFrameworkComponentManager>(GameInstance))
+	{
+		UGameFrameworkComponentManager::FExtensionHandlerDelegate AddInputMappingsDelegate =
+			UGameFrameworkComponentManager::FExtensionHandlerDelegate::CreateUObject(this, &ThisClass::HandleControllerExtension, ChangeContext);
+
+		TSharedPtr<FComponentRequestHandle> RequestHandle =
+			ComponentManager->AddExtensionHandler(APlayerController::StaticClass(), AddInputMappingsDelegate);
+
+		ActiveData.ExtensionRequestHandles.Add(RequestHandle);
+	}
 }
 
 #if WITH_EDITOR
@@ -127,6 +148,8 @@ void UGameFeatureAction_AddInputMappingContext::RegisterInputMappingContextsForL
 		return;
 	}
 
+	UE_LOG(LogGameFeatures, Display, TEXT("%hs Registering Input Mapping Contexts for LocalPlayer [%s]"), __func__, *LocalPlayer->GetName());
+
 	UAssetManager& AssetManager = UAssetManager::Get();
 	if (UEnhancedInputLocalPlayerSubsystem* InputSub = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
 	{
@@ -153,6 +176,14 @@ void UGameFeatureAction_AddInputMappingContext::RegisterInputMappingContextsForL
 				}
 			}
 		}
+		else
+		{
+			UE_LOG(LogGameFeatures, Error, TEXT("Failed to find EnhancedInputUserSettings for LocalPlayer [%s]. Input mappings wont be added. Make sure you're set to use the EnhancedInput system via config file."), *LocalPlayer->GetName());
+		}
+	}
+	else
+	{
+		UE_LOG(LogGameFeatures, Error, TEXT("Failed to find EnhancedInputLocalPlayerSubsystem for LocalPlayer [%s]. Input mappings wont be added. Make sure you're set to use the EnhancedInput system via config file."), *LocalPlayer->GetName());
 	}
 }
 
@@ -236,13 +267,15 @@ void UGameFeatureAction_AddInputMappingContext::HandleControllerExtension(
 	APlayerController* PC = CastChecked<APlayerController>(Actor);
 	FPerContextData& ActiveData = ContextData.FindOrAdd(ChangeContext);
 
+	UE_LOG(LogGameFeatures, Display, TEXT("%hs Handling Controller Extension for Player [%s] (%s)"), __func__, *PC->GetName(), *EventName.ToString());
+
 	if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionRemoved) ||
 		(EventName == UGameFrameworkComponentManager::NAME_ReceiverRemoved))
 	{
 		RemoveInputMapping(PC, ActiveData);
 	}
 	else if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded) ||
-		(EventName == NAME_BindInputsNow))
+		(EventName == "BindInputsNow"))
 	{
 		AddInputMappingForPlayer(PC->GetLocalPlayer(), ActiveData);
 	}
@@ -250,6 +283,8 @@ void UGameFeatureAction_AddInputMappingContext::HandleControllerExtension(
 
 void UGameFeatureAction_AddInputMappingContext::AddInputMappingForPlayer(UPlayer* Player, FPerContextData& ActiveData)
 {
+	UE_LOG(LogGameFeatures, Display, TEXT("%hs Adding Input Mapping Contexts for Player [%s]"), __func__, *Player->GetName());
+	
 	if (ULocalPlayer* LP = Cast<ULocalPlayer>(Player))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* InputSub = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
@@ -261,11 +296,17 @@ void UGameFeatureAction_AddInputMappingContext::AddInputMappingForPlayer(UPlayer
 					InputSub->AddMappingContext(MappingContext, Entry.Priority);
 				}
 			}
+
+			UE_LOG(LogGameFeatures, Display, TEXT("Added Input Mapping Contexts (%d) for Player [%s]"), InputMappings.Num(), *Player->GetName());
 		}
 		else
 		{
 			UE_LOG(LogGameFeatures, Error, TEXT("Failed to find EnhancedInputLocalPlayerSubsystem for LocalPlayer [%s]. Input mappings wont be added. Make sure you're set to use the EnhancedInput system via config file."), *Player->GetName());
 		}
+	}
+	else
+	{
+		UE_LOG(LogGameFeatures, Error, TEXT("Failed to cast Player to LocalPlayer for Player [%s]. Input mappings wont be added."), *Player->GetName());
 	}
 }
 
@@ -287,6 +328,10 @@ void UGameFeatureAction_AddInputMappingContext::RemoveInputMapping(APlayerContro
 		{
 			UE_LOG(LogGameFeatures, Error, TEXT("Failed to find EnhancedInputLocalPlayerSubsystem for LocalPlayer [%s]. Input mappings wont be removed. Make sure you're set to use the EnhancedInput system via config file."), *PlayerController->GetName());
 		}
+	}
+	else
+	{
+		UE_LOG(LogGameFeatures, Error, TEXT("Failed to find LocalPlayer for PlayerController [%s]. Input mappings wont be removed."), *PlayerController->GetName());
 	}
 }
 
