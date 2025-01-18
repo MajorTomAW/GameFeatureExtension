@@ -45,7 +45,7 @@ public:
 	TSoftClassPtr<UUserWidget> WidgetClass;
 
 	/** The slot tag to insert this widget into */
-	UPROPERTY(EditAnywhere, Category = "UI", meta = (Categories = "UI.Slot"))
+	UPROPERTY(EditAnywhere, Category = "UI", meta = (Categories = "HUD.Slot"))
 	FGameplayTag SlotTag;
 
 	/** The priority of this widget, higher values will be drawn on top of lower values */

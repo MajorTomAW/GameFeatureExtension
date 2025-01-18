@@ -158,7 +158,7 @@ void UGameFeatureAction_AddWidget::AddWidgets(AActor* Actor, FPerContextData& Ac
 		// Push Layers
 		for (const auto& Entry : Layouts)
 		{
-			if (TSubclassOf<UCommonActivatableWidget> ConcreteWidgetClass = Entry.LayoutClass.Get())
+			if (TSubclassOf<UCommonActivatableWidget> ConcreteWidgetClass = Entry.LayoutClass.LoadSynchronous())
 			{
 				ActorData.LayoutsAdded.Add(UCommonUIExtensions::PushContentToLayer_ForPlayer(LP, Entry.LayerTag, ConcreteWidgetClass));
 			}
