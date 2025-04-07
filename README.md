@@ -67,7 +67,7 @@ Coming soon...
 ---
 
 <p align="center">
-Like this project? Feel free to leave a star 🌟<br>
+If you like this project, leaving a star is much appreciated<br>
 <a href="#head">
 Back to the top
 </a>
