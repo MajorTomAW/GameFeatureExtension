@@ -8,6 +8,7 @@
 #endif
 
 #include "CommonActivatableWidget.h"
+#include "CommonLocalPlayer.h"
 #include "CommonUIExtensions.h"
 #include "GameFeaturesSubsystemSettings.h"
 #include "Components/GameFrameworkComponentManager.h"
@@ -151,7 +152,15 @@ void UGameFeatureAction_AddWidget::AddWidgets(AActor* Actor, FPerContextData& Ac
 		return;
 	}
 
-	if (ULocalPlayer* LP = Cast<ULocalPlayer>(HUD->GetOwningPlayerController()->Player))
+	UWorld* const World = HUD->GetWorld();
+	if (!World ||
+		(World->WorldType == EWorldType::EditorPreview) ||
+		(World->WorldType == EWorldType::GamePreview))
+	{
+		return;
+	}
+	
+	if (UCommonLocalPlayer* LP = Cast<UCommonLocalPlayer>(HUD->GetOwningPlayerController()->Player))
 	{
 		FPerActorData& ActorData = ActiveData.ActorData.FindOrAdd(Actor);
 
